@@ -31,5 +31,5 @@
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/donate4life.git
+git clone https://github.com/S48avio/Blood-Donation.git
 cd donate4life
