@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <title>Donate4Life</title>
+    <style>
+      /* Smooth scrolling behavior */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      .navbar-brand {
+        display: flex;
+        align-items: center;
+      }
+      .navbar-brand img {
+        margin-right: 10px;
+      }
+      .navbar-brand h1 {
+        margin: 0;
+        font-size: 1.5rem;
+      }
+      .navbar-brand .donate4life .text-4 {
+        color: red;
+      }
+      .navbar-brand .donate4life .text-life {
+        color: white;
+      }
+      .nav-link {
+        color: white;
+        font-size: 1.2rem;
+        position: relative;
+        transition: color 0.3s;
+      }
+      .navbar {
+        background-color: #002147; /* Navy blue background */
+        padding: 0.5rem 1rem; /* Adjust padding to reduce height */
+      }
+      .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        display: block;
+        margin-top: 5px;
+        right: 0;
+        background: cyan;
+        transition: width 0.3s ease, background-color 0.3s ease;
+      }
+      .nav-link:hover::after {
+        width: 100%;
+        left: 0;
+        background: cyan;
+      }
+      .nav-link.active {
+        font-weight: bold;
+        color: red !important; /* Cyan color */
+      }
+      .nav-link.active::after {
+        width: 0;
+      }
+      .navbar-toggler {
+        border: none; /* Remove border */
+        background: none; /* Remove background */
+        padding: 0; /* Remove padding */
+      }
+      .navbar-toggler-icon {
+        width: 30px; /* Adjust width */
+        height: 21px; /* Adjust height */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background: none;
+      }
+      .navbar-toggler-icon::before,
+      .navbar-toggler-icon::after,
+      .navbar-toggler-icon div {
+        content: '';
+        display: block;
+        height: 3px; /* Thickness of the lines */
+        background-color: white; /* Color of the lines */
+        border-radius: 2px; /* Rounded edges */
+      }
+      .navbar-toggler-icon div {
+        background-color: white; /* Middle line color */
+      }
+      .navbar-toggler:focus, .navbar-toggler:active {
+        outline: none; /* Remove focus outline */
+        box-shadow: none; /* Remove focus shadow */
+      }
+      .aboutus {
+        margin-bottom: 1rem;
+      }
+      .main-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: calc(100vh - 56px); /* Adjust for navbar height */
+        background-color: #f8f9fa; /* Light background color for the section */
+        padding: 20px; /* Add padding if needed */
+      }
+      .quote-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        text-align: left;
+      }
+      .quote-container p {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #002147; /* Navy blue text */
+        margin-bottom: 20px;
+      }
+      .btn-custom {
+        background-color: blue;
+        color: red;
+        font-weight: 500;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 10px;
+        text-transform: uppercase;
+        transition: background-color 0.3s, color 0.3s;
+        display: inline-block;
+        margin: 5px; /* Adjust margin for spacing between buttons */
+      }
+      .btn-custom:hover {
+        background-color: darkblue;
+        color: white;
+        text-decoration: none;
+      }
+      .image-container img {
+        margin-bottom: 2rem;
+        max-width: 100%;
+        height: auto;
+      }
+      .quote-rotator {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .button-group {
+        display: flex;
+        gap: 10px; /* Space between buttons */
+      }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="#">
+          <img src="{{ url_for('static', filename='icon.png') }}" width="140" height="80" class="d-inline-block align-top" alt="">
+          <h1 class="donate4life">
+            Donate <span class="text-4">4 </span><span class="text-life">Life</span>
+          </h1>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('donor') }}">Donate Blood <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('requests') }}">Find Donor</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact Us</a>
+            </li>
+          </ul>
+        </div>
+    </nav>
+    <!-- Flash Messages -->
+    <div class="container mt-3">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="alert alert-dismissible fade show" role="alert">
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endif %}
+      {% endwith %}
+    </div>
+    <section class="main-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 quote-container">
+            <div class="quote-rotator">
+              <p id="quote-text"></p>
+              <div class="button-group">
+                <a href="{{ url_for('donor') }}" class="btn-custom">Donate Blood</a>
+                <a href="{{ url_for('requests') }}" class="btn-custom">Request Blood</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 image-container">
+            <img src="{{ url_for('static', filename='icon.png') }}" alt="Donate Blood">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+          <h2 class="aboutus">About Us</h2>
+          <p>
+            <b>Welcome to Donate 4 Life,</b> a dedicated platform aimed at increasing blood donations and improving the lives of those in need. We strive to connect donors with recipients in a meaningful way and provide a seamless experience for both parties. Our mission is to raise awareness about the importance of blood donation and ensure a steady supply of blood for hospitals and medical facilities.
+          </p>
+          <p>
+            At Donate 4 Life, we believe that every drop counts and every donation has the potential to save lives. We work tirelessly to make the donation process as convenient and impactful as possible. Join us in our mission to make a difference and help us save lives by donating blood or encouraging others to do so.
+          </p>
+          <p>
+            Created by a passionate team of students from Rajagiri School of Engineering and Technology, Kakkanad, our platform is a product of dedication and innovation. Our team is committed to leveraging technology and community engagement to address the critical need for blood donations and enhance the overall effectiveness of the donation process.
+          </p>
+          <p>
+            <b>Features of Donate 4 Life:</b>
+          </p>
+          <ul>
+            <li><b>Register for Blood Donation:</b> Easily sign up as a blood donor through our user-friendly registration process. Once registered, you will receive notifications about upcoming donation drives and blood donation camps in your area.</li>
+            <li><b>Find a Donor:</b> Our platform allows you to search for potential blood donors across various districts in Kerala. Whether you need blood for yourself or a loved one, you can find and connect with donors who are ready to help.</li>
+            <li><b>Real-Time Updates:</b> Stay informed with real-time updates about blood donation needs, upcoming events, and donor availability. Our platform ensures you have the latest information to make informed decisions.</li>
+          </ul>
+        </div>
+      </section>
+      <hr>
+      <section id="contact" class="contact">
+        <div class="container">
+          <h2>Contact Us</h2>
+          <p>
+            <i class="fas fa-envelope"></i> Savio Sunny: <a href="mailto:saviosunny48@gmail.com">saviosunny48@gmail.com</a>
+          </p>
+        </div>
+      </section>
+      
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <script>
+      const quotes = [
+        "Every two seconds, someone in the world needs blood.",
+        "One donation can potentially save up to three lives.",
+        "On average, a single unit of blood is donated every 2 seconds in the United States.",
+        "Approximately 4.5 million Americans would die each year without blood transfusions.",
+        "Around 40% of blood donations are used in emergency situations.",
+        "Blood donations are crucial for the treatment of cancer patients, with about 25% of donated blood being used for cancer treatments.",
+        "Blood is needed for more than 50% of all surgeries performed in hospitals.",
+        "Less than 10% of eligible blood donors actually donate blood each year.",
+        "The majority of blood donors are between the ages of 16 and 65, with older individuals encouraged to donate as long as they remain healthy.",
+        "Every blood donation has the potential to help patients of all ages, from newborns to the elderly.",
+        "In India, blood transfusions are needed every 2 seconds, with a demand of around 12 million units annually.",
+        "India has over 1.4 billion people, with only about 1% donating blood each year.",
+        "Only 10% of the eligible population in India donates blood, leaving a significant gap in supply.",
+        "Approximately 2 million units of blood are collected annually in India, while the need is over 12 million units.",
+        "India’s blood donation rate is lower compared to global standards, highlighting the need for more donors.",
+        "The Indian Red Cross Society aims to increase voluntary blood donations to ensure a stable blood supply.",
+        "Over 25% of blood donations in India are used for treating patients with anemia and thalassemia.",
+        "Blood donation helps in surgeries, trauma care, and treating chronic conditions in Indian hospitals.",
+        "Blood banks in India face a shortage of donors, especially during festivals and holidays.",
+        "Efforts are being made to improve blood donation rates through awareness campaigns and mobile blood donation units."
+      ];
+
+      let currentIndex = 0;
+
+      function rotateQuotes() {
+        const quoteElement = document.getElementById('quote-text');
+        quoteElement.textContent = quotes[currentIndex];
+        currentIndex = (currentIndex + 1) % quotes.length;
+      }
+
+      // Initial call
+      rotateQuotes();
+      
+      // Change quote every 5 seconds
+      setInterval(rotateQuotes, 5000);
+    </script>
+</body>
+</html>

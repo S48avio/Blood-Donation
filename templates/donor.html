@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <title>Donate Blood</title>
+    <style>
+      .navbar-brand {
+        display: flex;
+        align-items: center;
+      }
+      .navbar-brand img {
+        margin-right: 10px;
+      }
+      .navbar-brand h1 {
+        margin: 0;
+        font-size: 1.5rem;
+      }
+      .navbar-brand .donate4life .text-4 {
+        color: red;
+      }
+      .navbar-brand .donate4life .text-life {
+        color: white;
+      }
+      .nav-link {
+        color: white;
+        font-size: 1.2rem;
+        position: relative;
+        transition: color 0.3s;
+      }
+      .navbar {
+        background-color: #002147; /* Navy blue background */
+        padding: 0.5rem 1rem; /* Adjust padding to reduce height */
+      }
+      .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        display: block;
+        margin-top: 5px;
+        right: 0;
+        background: cyan;
+        transition: width 0.3s ease, background-color 0.3s ease;
+      }
+      .nav-link:hover::after {
+        width: 100%;
+        left: 0;
+        background: cyan;
+      }
+      .nav-link.active {
+        font-weight: bold;
+        color: red !important; /* White color for active link */
+      }
+      .nav-link.active::after {
+        width: 0;
+      }
+      .navbar-toggler {
+        border: none; /* Remove border */
+        background: none; /* Remove background */
+        padding: 0; /* Remove padding */
+      }
+      .navbar-toggler-icon {
+        width: 30px; /* Adjust width */
+        height: 21px; /* Adjust height */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background: none;
+      }
+      .navbar-toggler-icon::before,
+      .navbar-toggler-icon::after,
+      .navbar-toggler-icon div {
+        content: '';
+        display: block;
+        height: 3px; /* Thickness of the lines */
+        background-color: white; /* Color of the lines */
+        border-radius: 2px; /* Rounded edges */
+      }
+      .navbar-toggler-icon div {
+        background-color: white; /* Middle line color */
+      }
+      .navbar-toggler:focus, .navbar-toggler:active {
+        outline: none; /* Remove focus outline */
+        box-shadow: none; /* Remove focus shadow */
+      }
+      .main-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: calc(100vh - 56px); /* Adjust for navbar height */
+        background-color: #f8f9fa; /* Light background color for the section */
+        padding: 20px; /* Add padding if needed */
+      }
+      .quotes-section {
+        background-color: #ffffff; /* White background color */
+        padding: 20px;
+        text-align: center;
+      }
+      .quote {
+        font-size: 1.25rem;
+        font-weight: bold; /* Make the quote bold */
+        margin-bottom: 15px;
+        color: #333;
+        display: none; /* Hide all quotes by default */
+      }
+      .quote.active {
+        display: block; /* Show only the active quote */
+      }
+      .form-section {
+        background-color: #ffffff; /* White background for the form section */
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        max-width: 600px;
+        margin: 20px auto;
+      }
+      .form-section h2 {
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+      }
+      .wave-group {
+        position: relative;
+        margin-bottom: 20px; /* Add margin between fields */
+      }
+      .wave-group .input, .wave-group select {
+        font-size: 16px;
+        padding: 10px 10px 10px 5px;
+        display: block;
+        width: 100%; /* Adjust width as needed */
+        border: none;
+        border-bottom: 1px solid #515151;
+        background: transparent;
+        transition: border-bottom-color 0.3s;
+      }
+      .wave-group .input:focus, .wave-group select:focus {
+        outline: none;
+        border-bottom-color: #5264AE; /* Adjust focus color */
+      }
+      .wave-group .label {
+        color: #999;
+        font-size: 18px;
+        font-weight: normal;
+        position: absolute;
+        pointer-events: none;
+        left: 5px;
+        top: 10px;
+        display: flex;
+        transition: top 0.3s, font-size 0.3s, color 0.3s;
+      }
+      .wave-group .label-char {
+        transition: 0.2s ease all;
+        transition-delay: calc(var(--index) * .05s);
+      }
+      .wave-group .input:focus ~ .label .label-char,
+      .wave-group .input:valid ~ .label .label-char,
+      .wave-group select:focus ~ .label .label-char,
+      .wave-group select:valid ~ .label .label-char {
+        transform: translateY(-20px);
+        font-size: 14px;
+        color: #5264AE;
+      }
+      .wave-group .bar {
+        position: relative;
+        display: block;
+        width: 100%; /* Adjust width as needed */
+      }
+      .wave-group .bar:before, .wave-group .bar:after {
+        content: '';
+        height: 2px;
+        width: 0;
+        bottom: 1px;
+        position: absolute;
+        background: #5264AE;
+        transition: 0.2s ease all;
+      }
+      .wave-group .bar:before {
+        left: 50%;
+      }
+      .wave-group .bar:after {
+        right: 50%;
+      }
+      .wave-group .input:focus ~ .bar:before,
+      .wave-group .input:focus ~ .bar:after,
+      .wave-group select:focus ~ .bar:before,
+      .wave-group select:focus ~ .bar:after {
+        width: 50%;
+      }
+      .btn{
+        align-items: center;
+      }
+     
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="#">
+          <img src="{{ url_for('static', filename='icon.png') }}" width="140" height="80" class="d-inline-block align-top" alt="">
+          <h1 class="donate4life">
+            Donate <span class="text-4">4 </span><span class="text-life">Life</span>
+          </h1>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About Us</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link active" href="#">Donate Blood <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('requests') }}">Find Donor</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact Us</a>
+            </li>
+          </ul>
+        </div>
+    </nav>
+
+    <!-- Quotes Section -->
+    <section class="quotes-section">
+      <div class="container">
+        <div id="quote-display" class="quote active"></div>
+      </div>
+    </section>
+
+ <!-- Form Section -->
+<section class="form-section">
+  <div class="container">
+    <h2>Blood Donation Form</h2>
+    <form action="{{ url_for('submit') }}" method="POST">
+      <div class="wave-group">
+        <input required type="text" class="input" name="Name">
+        <span class="bar"></span>
+        <label class="label">
+          <span class="label-char" style="--index: 0">N</span>
+          <span class="label-char" style="--index: 1">a</span>
+          <span class="label-char" style="--index: 2">m</span>
+          <span class="label-char" style="--index: 3">e</span>
+        </label>
+      </div>
+
+      <div class="wave-group">
+        <select required class="input" name="Blood Group">
+          <option value="A+">A+</option>
+          <option value="A-">A-</option>
+          <option value="B+">B+</option>
+          <option value="B-">B-</option>
+          <option value="AB+">AB+</option>
+          <option value="AB-">AB-</option>
+          <option value="O+">O+</option>
+          <option value="O-">O-</option>
+        </select>
+        <span class="bar"></span>
+        <label class="label">
+          <span class="label-char" style="--index: 0">B</span>
+          <span class="label-char" style="--index: 1">l</span>
+          <span class="label-char" style="--index: 2">o</span>
+          <span class="label-char" style="--index: 3">o</span>
+          <span class="label-char" style="--index: 4">d</span>
+          <span class="label-char" style="--index: 5"> </span>
+          <span class="label-char" style="--index: 6">G</span>
+          <span class="label-char" style="--index: 7">r</span>
+          <span class="label-char" style="--index: 8">o</span>
+          <span class="label-char" style="--index: 9">u</span>
+          <span class="label-char" style="--index: 10">p</span>
+        </label>
+      </div>
+      
+      <div class="wave-group">
+        <select required class="input" name="Sex">
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+        <span class="bar"></span>
+        <label class="label">
+          <span class="label-char" style="--index: 0">G</span>
+          <span class="label-char" style="--index: 1">e</span>
+          <span class="label-char" style="--index: 2">n</span>
+          <span class="label-char" style="--index: 3">d</span>
+          <span class="label-char" style="--index: 4">e</span>
+          <span class="label-char" style="--index: 5">r</span>
+        </label>
+      </div>
+
+      <div class="wave-group">
+        <input required type="number" class="input" name="age">
+        <span class="bar"></span>
+        <label class="label">
+          <span class="label-char" style="--index: 0">A</span>
+          <span class="label-char" style="--index: 1">g</span>
+          <span class="label-char" style="--index: 2">e</span>
+        </label>
+      </div>
+
+      <div class="wave-group">
+        <input required type="tel" class="input" name="Phone Number">
+        <span class="bar"></span>
+        <label class="label">
+          <span class="label-char" style="--index: 0">P</span>
+          <span class="label-char" style="--index: 1">h</span>
+          <span class="label-char" style="--index: 2">o</span>
+          <span class="label-char" style="--index: 3">n</span>
+          <span class="label-char" style="--index: 4">e</span>
+          <span class="label-char" style="--index: 5"> </span>
+          <span class="label-char" style="--index: 6">N</span>
+          <span class="label-char" style="--index: 7">u</span>
+          <span class="label-char" style="--index: 8">m</span>
+          <span class="label-char" style="--index: 9">b</span>
+          <span class="label-char" style="--index: 10">e</span>
+          <span class="label-char" style="--index: 11">r</span>
+        </label>
+      </div>
+
+      <div class="wave-group">
+        <select required class="input" name="District">
+          <option value="Alappuzha">Alappuzha</option>
+          <option value="Ernakulam">Ernakulam</option>
+          <option value="Idukki">Idukki</option>
+          <option value="Kannur">Kannur</option>
+          <option value="Kasaragod">Kasaragod</option>
+          <option value="Kollam">Kollam</option>
+          <option value="Kottayam">Kottayam</option>
+          <option value="Kozhikode">Kozhikode</option>
+          <option value="Malappuram">Malappuram</option>
+          <option value="Palakkad">Palakkad</option>
+          <option value="Pathanamthitta">Pathanamthitta</option>
+          <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+          <option value="Thrissur">Thrissur</option>
+          <option value="Wayanad">Wayanad</option>
+        </select>
+        <span class="bar"></span>
+        <label class="label">
+          <span class="label-char" style="--index: 0">D</span>
+          <span class="label-char" style="--index: 1">i</span>
+          <span class="label-char" style="--index: 2">s</span>
+          <span class="label-char" style="--index: 3">t</span>
+          <span class="label-char" style="--index: 4">r</span>
+          <span class="label-char" style="--index: 5">i</span>
+          <span class="label-char" style="--index: 6">c</span>
+          <span class="label-char" style="--index: 7">t</span>
+        </label>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</section>
+<section id="about">
+  <div class="container">
+    <h2 class="aboutus">About Us</h2>
+    <p>
+      <b>Welcome to Donate 4 Life,</b> a dedicated platform aimed at increasing blood donations and improving the lives of those in need. We strive to connect donors with recipients in a meaningful way and provide a seamless experience for both parties. Our mission is to raise awareness about the importance of blood donation and ensure a steady supply of blood for hospitals and medical facilities.
+    </p>
+    <p>
+      At Donate 4 Life, we believe that every drop counts and every donation has the potential to save lives. We work tirelessly to make the donation process as convenient and impactful as possible. Join us in our mission to make a difference and help us save lives by donating blood or encouraging others to do so.
+    </p>
+    <p>
+      Created by a passionate team of students from Rajagiri School of Engineering and Technology, Kakkanad, our platform is a product of dedication and innovation. Our team is committed to leveraging technology and community engagement to address the critical need for blood donations and enhance the overall effectiveness of the donation process.
+    </p>
+    <p>
+      <b>Features of Donate 4 Life:</b>
+    </p>
+    <ul>
+      <li><b>Register for Blood Donation:</b> Easily sign up as a blood donor through our user-friendly registration process. Once registered, you will receive notifications about upcoming donation drives and blood donation camps in your area.</li>
+      <li><b>Find a Donor:</b> Our platform allows you to search for potential blood donors across various districts in Kerala. Whether you need blood for yourself or a loved one, you can find and connect with donors who are ready to help.</li>
+      <li><b>Real-Time Updates:</b> Stay informed with real-time updates about blood donation needs, upcoming events, and donor availability. Our platform ensures you have the latest information to make informed decisions.</li>
+    </ul>
+  </div>
+</section>
+<hr>
+<section id="contact" class="contact">
+  <div class="container">
+    <h2>Contact Us</h2>
+    <p>
+      <i class="fas fa-envelope"></i> Savio Sunny: <a href="mailto:saviosunny48@gmail.com">saviosunny48@gmail.com</a>
+    </p>
+  </div>
+</section>
+
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <script>
+      const quotes = [
+        "The greatest gift you can give someone is the gift of life.",
+        "Blood donation is an act of solidarity, an act of humanity.",
+        "One donation can save up to three lives.",
+        "Donate blood and make a difference.",
+        "Be a hero, donate blood.",
+        "Every drop counts. Donate blood and save lives.",
+        "You don’t have to be a doctor to save lives, just a blood donor.",
+        "Your blood donation can be the reason for someone’s survival.",
+        "Give the gift of life, donate blood today.",
+        "Blood donors are life savers in the truest sense.",
+        "A single pint of blood can save up to three lives.",
+        "Help others by donating blood; it's a simple act that can save lives.",
+        "Donating blood is a responsibility we all should embrace.",
+        "Be the reason someone smiles today. Donate blood.",
+        "Every blood donor is a hero.",
+        "Your blood can make the difference between life and death.",
+        "Give the gift of life, it’s a gift that keeps on giving.",
+        "Donate blood and be a beacon of hope.",
+        "Your one act of kindness can save a life.",
+        "Blood donation: The gift that saves lives."
+      ];
+
+      let currentQuoteIndex = 0;
+
+      function showNextQuote() {
+        const quoteDisplay = document.getElementById('quote-display');
+        quoteDisplay.textContent = quotes[currentQuoteIndex];
+        currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+      }
+
+      // Show the first quote immediately
+      showNextQuote();
+
+      // Change quote every 5 seconds
+      setInterval(showNextQuote, 5000);
+    </script>
+</body>
+</html>
