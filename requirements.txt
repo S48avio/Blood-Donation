@@ -1,1 +1,2 @@
-Flask, render_template, request, redirect, url_for, flash,PyMongo
+Flask==2.2.4
+Flask-PyMongo==2.3.0
