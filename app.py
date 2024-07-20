@@ -59,5 +59,4 @@ def requests():
 
     return render_template('request.html', donors=None)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
